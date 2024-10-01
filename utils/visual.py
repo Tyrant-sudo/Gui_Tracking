@@ -26,22 +26,25 @@ def extract_and_save_firstframe(video_path, output_image_path):
     video.release()
     print(f"First frame extracted and saved to {output_image_path}")
 
-def extract_firstframe(video_path):
+def extract_frame(video_path, frame_num, output_img_path=None):
     video = cv2.VideoCapture(video_path)
     if not video.isOpened():
         print("Error: Could not open video.")
         return False
     
-    ret, frame = video.read()
-    
-    if not ret:
-        print("Error: Could not read the first frame.")
-        video.release()
-        return False
-    
+    for _ in range(frame_num):
+        ret, frame = video.read()
+        
+        if not ret:
+            print("Error: Could not read the first frame.")
+            video.release()
+            return False
+    if output_img_path:
+        cv2.imwrite(output_img_path, frame)
     video.release()
     return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    
+
+
 
 def cut_save_video(video_path, output_path):
 # 打开视频文件
@@ -87,6 +90,7 @@ class Framed_Values:
         1
 
 
+"""
 if __name__ == "__main__":
 
     path_video = "../0_data/video/3min_test.mp4"
@@ -96,3 +100,11 @@ if __name__ == "__main__":
     # extract_and_save_firstframe(path_video, path_pic)
 
     cut_save_video(path_video, path_savevideo)
+"""
+
+
+if __name__ == "__main__":
+    path_video = "../0_data/video/3min_test.mp4"
+    path_pic   = "../0_data/video/3min_test_frame1000.png" 
+    
+    extract_frame(path_video, 1000, path_pic)

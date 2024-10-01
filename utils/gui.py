@@ -6,7 +6,7 @@ import threading
 import time
 import cv2
 
-from visual import extract_firstframe
+from visual import extract_frame
 
 class ImageDeformationApp:
     def __init__(self, root):
@@ -449,7 +449,7 @@ class ImageAnnotationApp:
 
         if image_path:
             try:
-                self.image = Image.fromarray(extract_firstframe(image_path))
+                self.image = Image.fromarray(extract_frame(image_path,1))
                 self.photo = ImageTk.PhotoImage(self.image)
                 self.canvas.config(scrollregion=(0, 0, self.photo.width(), self.photo.height()))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
